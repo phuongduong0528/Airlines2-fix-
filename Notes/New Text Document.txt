@@ -1,0 +1,33 @@
+(class ScheduleDto)
+>> RestSharp.RestRequest.AddBody(object)
+
+object body = new
+            {
+                id = s.Id,
+                date = s.Date,
+                time = s.Time,
+                from = s.From,
+                to = s.To,
+                flightnumber = s.FlightNumber,
+                totalseats = s.TotalSeats,
+                economyprice = s.EconomyPrice,
+                businessprice = 0,
+                firstclassprice = 0,
+                confirmed = s.Confirmed,
+                aircraftid = s.AircraftID,
+                aircraftname = s.AircraftName
+            };
+
+type(workshheet) = OfficeOpenXml.ExcelWorksheet
+
+                ===================== FORMAT TABLE 1 ==========================
+                worksheet.Cells[1, 2].Style.Numberformat.Format = "YYYY-MM-DD";
+                worksheet.Cells[1, 3].Style.Numberformat.Format = "HH:MM";
+
+                ===================== FORMAT TABLE 2 ===========================
+                ExcelNamedStyleXml dateformat = package.Workbook.Styles.CreateNamedStyle("DateString");
+                dateformat.Style.Numberformat.Format = "YYYY-MM-DD";
+
+                var table = worksheet.Tables[0];
+                table.ShowTotal = true;
+                table.Columns[1].DataCellStyleName = "DateString";
