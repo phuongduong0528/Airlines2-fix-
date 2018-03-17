@@ -15,7 +15,6 @@ namespace Airlines.Program
     public partial class EditForm : Form
     {
         public int Sid; //ID of Schedule that need to update
-        private ScheduleController scheduleController;
         private ScheduleDto schedule;
 
         public EditForm()
@@ -25,8 +24,7 @@ namespace Airlines.Program
 
         private async void EditForm_Load(object sender, EventArgs e)
         {
-            scheduleController = new ScheduleController();
-            schedule = await scheduleController.LoadSchedule(Sid);
+            schedule = await Program.Instance.ScheduleController.LoadSchedule(Sid);
             fromLbl.Text = $"From: {schedule.From}";
             toLbl.Text = $"To:{schedule.To}";
             aircraftLbl.Text = $"Aircraft: {schedule.AircraftName}";
@@ -43,6 +41,7 @@ namespace Airlines.Program
                 return;
             }
             schedule.Date = dateDtp.Value.Date.ToShortDateString();
+
             TimeSpan temp1;
             if (TimeSpan.TryParse(timeTxb.Text, out temp1))
                 schedule.Time = temp1.ToString();
@@ -51,6 +50,7 @@ namespace Airlines.Program
                 MessageBox.Show("Wrong time format");
                 return;
             }
+
             decimal temp2;
             if (Decimal.TryParse(economyTxb.Text, out temp2))
                 schedule.EconomyPrice = temp2;
@@ -59,10 +59,13 @@ namespace Airlines.Program
                 MessageBox.Show("Wrong price format");
                 return;
             }
-            int y = await scheduleController.FindFlight(schedule.Date, schedule.FlightNumber); //KIEM TRA BAY CUNG NGAY
+
+            int y = await Program.Instance.ScheduleController
+                .FindFlightID(schedule.Date, schedule.FlightNumber); //KIEM TRA BAY CUNG NGAY
             if (y == 0 || y == schedule.Id)
             {
-                scheduleController.EditSchedule(schedule);
+                Program.Instance.ScheduleController
+                    .EditSchedule(schedule);
                 this.Close();
             }
             else

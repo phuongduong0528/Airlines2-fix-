@@ -74,7 +74,7 @@ namespace Airlines.Program.Controller
         /// <summary>
         /// Return 0 if flight don't exist, other return schedule id
         /// </summary>
-        public async Task<int> FindFlight(string _date,string _flightnumber)
+        public async Task<int> FindFlightID(string _date,string _flightnumber)
         {
             ScheduleRequest<int> request = new ScheduleRequest<int>();
             request.Url = baseUrl + "/Schedule/FindFlight";
@@ -87,11 +87,11 @@ namespace Airlines.Program.Controller
             return re;
         }
 
-        public async Task<List<int>> ImportCsv(List<ScheduleDto> scheduleDtos)
+        public async Task<List<int>> ImportCsv(List<ScheduleDto> _scheduleDtos)
         {
             ScheduleRequest<List<int>> request = new ScheduleRequest<List<int>>();
             request.Url = baseUrl + "/Schedule/Import";
-            List<int> re = await request.SubmitDataJson(Method.POST, JsonConvert.SerializeObject(scheduleDtos));
+            List<int> re = await request.SubmitDataJson(Method.POST, JsonConvert.SerializeObject(_scheduleDtos));            
             return re;
         }
     }

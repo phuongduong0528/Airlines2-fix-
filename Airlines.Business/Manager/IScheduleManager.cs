@@ -18,5 +18,6 @@ namespace Airlines.Business.Manager
         List<Schedule> GetListScheduleFilter(string from,string to,string date,
             string flightnumber,string sortBy,bool descending);
         List<Schedule> GetListScheduleFilter(int start, int end);
+        List<int> CsvResult(List<Schedule> schedules);
     }
 }

@@ -31,10 +31,11 @@
             this.chooseBtn = new System.Windows.Forms.Button();
             this.filepathTxb = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.importBtn = new System.Windows.Forms.Button();
-            this.failLbl = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.duplicateLbl = new System.Windows.Forms.Label();
             this.successLbl = new System.Windows.Forms.Label();
+            this.failLbl = new System.Windows.Forms.Label();
+            this.importBtn = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +60,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.duplicateLbl);
             this.groupBox1.Controls.Add(this.successLbl);
             this.groupBox1.Controls.Add(this.failLbl);
             this.groupBox1.Font = new System.Drawing.Font("Tw Cen MT", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -68,6 +70,33 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Result";
+            // 
+            // duplicateLbl
+            // 
+            this.duplicateLbl.AutoSize = true;
+            this.duplicateLbl.Location = new System.Drawing.Point(6, 67);
+            this.duplicateLbl.Name = "duplicateLbl";
+            this.duplicateLbl.Size = new System.Drawing.Size(71, 20);
+            this.duplicateLbl.TabIndex = 2;
+            this.duplicateLbl.Text = "Duplicate";
+            // 
+            // successLbl
+            // 
+            this.successLbl.AutoSize = true;
+            this.successLbl.Location = new System.Drawing.Point(6, 32);
+            this.successLbl.Name = "successLbl";
+            this.successLbl.Size = new System.Drawing.Size(60, 20);
+            this.successLbl.TabIndex = 1;
+            this.successLbl.Text = "Success";
+            // 
+            // failLbl
+            // 
+            this.failLbl.AutoSize = true;
+            this.failLbl.Location = new System.Drawing.Point(6, 100);
+            this.failLbl.Name = "failLbl";
+            this.failLbl.Size = new System.Drawing.Size(31, 20);
+            this.failLbl.TabIndex = 0;
+            this.failLbl.Text = "Fail";
             // 
             // importBtn
             // 
@@ -81,28 +110,10 @@
             this.importBtn.UseVisualStyleBackColor = true;
             this.importBtn.Click += new System.EventHandler(this.importBtn_Click);
             // 
-            // failLbl
-            // 
-            this.failLbl.AutoSize = true;
-            this.failLbl.Location = new System.Drawing.Point(6, 71);
-            this.failLbl.Name = "failLbl";
-            this.failLbl.Size = new System.Drawing.Size(31, 20);
-            this.failLbl.TabIndex = 0;
-            this.failLbl.Text = "Fail";
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "CSV files|*.csv";
-            // 
-            // successLbl
-            // 
-            this.successLbl.AutoSize = true;
-            this.successLbl.Location = new System.Drawing.Point(6, 32);
-            this.successLbl.Name = "successLbl";
-            this.successLbl.Size = new System.Drawing.Size(60, 20);
-            this.successLbl.TabIndex = 1;
-            this.successLbl.Text = "Success";
             // 
             // ImportFile
             // 
@@ -115,7 +126,6 @@
             this.Controls.Add(this.chooseBtn);
             this.Name = "ImportFile";
             this.Text = "ImportFile";
-            this.Load += new System.EventHandler(this.ImportFile_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -132,5 +142,6 @@
         private System.Windows.Forms.Label failLbl;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label successLbl;
+        private System.Windows.Forms.Label duplicateLbl;
     }
 }

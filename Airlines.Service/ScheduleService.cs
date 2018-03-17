@@ -20,7 +20,9 @@ namespace Airlines.Service
 
         public bool AddSchedule(ScheduleDto scheduleDto)
         {
-            return ScheduleManager.AddSchedule(scheduleAdaptor.ToScheduleEntity(scheduleDto));
+            return ScheduleManager.AddSchedule(
+                scheduleAdaptor.ToScheduleEntity(scheduleDto)
+                );
         }
 
         public List<string> AirportList()
@@ -35,7 +37,9 @@ namespace Airlines.Service
 
         public bool EditSchedule(ScheduleDto scheduleDto)
         {
-            return ScheduleManager.EditSchedule(scheduleAdaptor.ToScheduleEntity(scheduleDto));
+            return ScheduleManager.EditSchedule(
+                scheduleAdaptor.ToScheduleEntity(scheduleDto)
+                );
         }
 
         public int FindFlight(string date, string flightnumber)
@@ -43,47 +47,11 @@ namespace Airlines.Service
             return ScheduleManager.FindFlight(date, flightnumber);
         }
 
-        public List<int> ImportService(List<ScheduleDto> scheduleDtos)
+        public List<int> CsvResult(List<ScheduleDto> scheduleDtos)
         {
-            int successful = 0;
-            int fail = 0;
-
-            foreach (ScheduleDto sdto in scheduleDtos)
-            {
-                if (sdto.Id == 0) // 0 = ADD; ID WILL AUTOMATICALLY ASSIGN WHEN ADDED TO DATABASE
-                {
-                    int i = FindFlight(sdto.Date, sdto.FlightNumber); //FIND DUPLICATE
-                    if (i == 0) //IF NO DUPLICATE
-                    {
-                        bool check = AddSchedule(sdto);
-                        if (check)
-                            successful++;
-                        else
-                            fail++;
-                    }
-                    else
-                        fail++;
-                }
-                else //EDIT
-                {
-                    int i = FindFlight(sdto.Date, sdto.FlightNumber);//FIND SCHEDULE NEED TO EDIT
-                    if (i > 0)
-                    {
-                        sdto.Id = i; //ASSIGN ID
-                        bool check = EditSchedule(sdto);
-                        if (check)
-                            successful++;
-                        else
-                            fail++;
-                    }
-                    else
-                        fail++;
-                }
-            }
-            List<int> result = new List<int>();
-            result.Add(successful);
-            result.Add(fail);
-            return result;
+            return ScheduleManager.CsvResult(
+                scheduleAdaptor.ToListScheduleEntity(scheduleDtos)
+                );
         }
 
         public List<ScheduleDto> ListScheduleFilter(string from, string to, string date, 
@@ -99,7 +67,9 @@ namespace Airlines.Service
         {
             int _id;
             if (Int32.TryParse(id, out _id))
-                return scheduleAdaptor.GetScheduleDto(ScheduleManager.GetSchedule(_id));
+                return scheduleAdaptor.GetScheduleDto(
+                    ScheduleManager.GetSchedule(_id)
+                    );
             else
                 return null;
         }

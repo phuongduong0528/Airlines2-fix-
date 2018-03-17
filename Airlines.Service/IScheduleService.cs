@@ -1,4 +1,5 @@
-﻿using Airlines.Service.Dto;
+﻿
+using Airlines.Service.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace Airlines.Service
             UriTemplate = "/Schedule/Import",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json)]
-        List<int> ImportService(List<ScheduleDto> scheduleDtos);
+        List<int> CsvResult(List<ScheduleDto> scheduleDtos);
 
     }
 }

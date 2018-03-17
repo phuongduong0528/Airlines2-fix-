@@ -115,5 +115,58 @@ namespace Airlines.Business.Manager
         {
             return scheduleRepository.GetSchedule(id);
         }
+
+        public List<int> CsvResult(List<Schedule> schedules)
+        {
+            int successful = 0;
+            int duplicate = 0;
+            int fail = 0;
+
+            foreach (Schedule sdto in schedules)
+            {
+                if (sdto == null)
+                {
+                    fail++;
+                    continue;
+                }
+                if (sdto.ID == 0) // 0 = ADD; ID WILL AUTOMATICALLY ASSIGN WHEN ADDED TO DATABASE
+                {
+                    int i = FindFlight(sdto.Date.ToShortDateString(), sdto.FlightNumber); //FIND DUPLICATE
+                    if (i == 0) //IF NO DUPLICATE
+                    {
+                        bool check = AddSchedule(sdto);
+                        if (check)
+                            successful++;
+                        else
+                            fail++;
+                    }
+                    else
+                    {
+                        fail++;
+                        duplicate++;
+                    }
+                }
+                else //EDIT
+                {
+                    int i = FindFlight(sdto.Date.ToShortDateString(), sdto.FlightNumber); //FIND SCHEDULE NEED TO EDIT
+                    if (i > 0)
+                    {
+                        sdto.ID = i; //ASSIGN ID
+                        bool check = EditSchedule(sdto);
+                        if (check)
+                            successful++;
+                        else
+                            fail++;
+                    }
+                    else
+                        fail++;
+                }
+            }
+            List<int> result = new List<int>();
+            result.Add(successful);
+            result.Add(duplicate);
+            result.Add(fail);
+            return result;
+        }
     }
 }

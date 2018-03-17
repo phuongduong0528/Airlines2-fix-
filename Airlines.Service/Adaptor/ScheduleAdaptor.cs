@@ -64,5 +64,16 @@ namespace Airlines.Service.Adaptor
                 return null;
             }
         }
+
+        public List<Schedule> ToListScheduleEntity(List<ScheduleDto> scheduleDtos)
+        {
+            List<Schedule> result = new List<Schedule>();
+            foreach (ScheduleDto sdto in scheduleDtos)
+            {
+                result.Add(ToScheduleEntity(sdto));
+            }
+            return result;
+        }
+
     }
 }

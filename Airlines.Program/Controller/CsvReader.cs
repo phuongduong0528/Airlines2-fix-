@@ -3,8 +3,10 @@ using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace Airlines.Program.Controller
 {
@@ -23,25 +25,25 @@ namespace Airlines.Program.Controller
             ExcelTextFormat format = new ExcelTextFormat();
             format.Delimiter = ',';
             format.Encoding = new UTF8Encoding();
-            //format.Culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.ToString());
-            //format.Culture.DateTimeFormat.ShortDatePattern = "yyyy-mm-dd";
+            format.Culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.ToString());
+            format.Culture.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
             using (ExcelPackage package = new ExcelPackage())
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Worksheet 1");
                 worksheet.Cells["A1"].LoadFromText(fileInfo, format,TableStyles.None,true);
 
                 //FORMAT DATA
-                for (int i = 1; i <= worksheet.Dimension.End.Row; i++)
-                {
-                    worksheet.Cells[i, 2].Style.Numberformat.Format = "YY-MM-DD";
-                    worksheet.Cells[i, 3].Style.Numberformat.Format = "HH:MM";
-                }
+                //for (int i = 1; i <= worksheet.Dimension.End.Row; i++)
+                //{
+                //    worksheet.Cells[i, 2].Style.Numberformat.Format = "YY-MM-DD";
+                //    worksheet.Cells[i, 3].Style.Numberformat.Format = "HH:MM";
+                //}
 
                 //READ AND CREATE SCHEDULEDTO LIST
                 for (int i = 1; i <= worksheet.Dimension.End.Row; i++)
                 {
 
-                    if (!Validate(worksheet, i))
+                    if (!ValidateRow(worksheet, i))
                         continue;
 
                     s = new ScheduleDto();
@@ -55,11 +57,18 @@ namespace Airlines.Program.Controller
 
                     s.Date = worksheet.Cells[i, 2].Value.ToString();
                     s.Time = timeval.ToShortTimeString();
-                    s.FlightNumber = worksheet.Cells[i, 4].Value.ToString();
-                    s.From = worksheet.Cells[i, 5].Value.ToString();
-                    s.To = worksheet.Cells[i, 6].Value.ToString();
-                    s.AircraftID = Convert.ToInt32(worksheet.Cells[i, 7].Value);
-                    s.EconomyPrice = Convert.ToDecimal(worksheet.Cells[i, 8].Value);
+                    s.FlightNumber = worksheet.Cells[i, 4].Text;
+                    s.From = worksheet.Cells[i, 5].Text;
+                    s.To = worksheet.Cells[i, 6].Text;
+                    try
+                    {
+                        s.AircraftID = Convert.ToInt32(worksheet.Cells[i, 7].Text);
+                        s.EconomyPrice = Convert.ToDecimal(worksheet.Cells[i, 8].Text);
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
                     if (worksheet.Cells[i, 9].Value.ToString().Equals("OK"))
                         s.Confirmed = true;
                     else
@@ -74,7 +83,7 @@ namespace Airlines.Program.Controller
 
 
         //VALIIDATE CSV ROWS
-        private bool Validate(ExcelWorksheet worksheet,int row)
+        private bool ValidateRow(ExcelWorksheet worksheet,int row)
         {
             if (worksheet.Cells[row, 9].Value == null)
                 return false;

@@ -22,7 +22,7 @@ namespace Airlines.Business.Repositories
             {
                 if (schedule == null)
                     return false;
-                schedule.ID = session.Schedules.Count() + 1;
+                schedule.ID = session.Schedules.Max(s => s.ID) + 1;
                 session.Schedules.Add(schedule);
                 session.SaveChanges();
                 return true;

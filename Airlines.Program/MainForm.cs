@@ -14,7 +14,6 @@ namespace Airlines.Program
 {
     public partial class MainForm : Form
     {
-        ScheduleController scheduleController;
         List<ScheduleDto> schedules;
 
         public MainForm()
@@ -39,7 +38,7 @@ namespace Airlines.Program
             }
         }
 
-        public async Task RefreshGridView()
+        public async Task RefreshData()
         {
             bool desc = false;
             if (descChkbx.Checked)
@@ -47,7 +46,7 @@ namespace Airlines.Program
 
             schedules = new List<ScheduleDto>();
 
-            schedules = await scheduleController.LoadListSchedule(
+            schedules = await Program.Instance.ScheduleController.LoadListSchedule(
                 fromCbx.SelectedItem.ToString(),
                 toCbx.SelectedItem.ToString(),
                 outboundTxb.Text,
@@ -58,8 +57,7 @@ namespace Airlines.Program
 
         private async void MainForm_Load(object sender, EventArgs e)
         {
-            scheduleController = new ScheduleController();
-            List<string> officelist = await scheduleController.GetOffice();
+            List<string> officelist = await Program.Instance.ScheduleController.GetOffice();
             foreach(string str in officelist)
             {
                 fromCbx.Items.Add(str);
@@ -69,13 +67,13 @@ namespace Airlines.Program
             toCbx.SelectedIndex = 2;
             sortCbx.SelectedIndex = 0;
 
-            await RefreshGridView();
+            await RefreshData();
             LoadGridView();
         }
 
         private async void applyBtn_Click(object sender, EventArgs e)
         {
-            await RefreshGridView();
+            await RefreshData();
             LoadGridView();
         }
 
@@ -92,8 +90,8 @@ namespace Airlines.Program
                 MessageBox.Show("No selection!");
                 return;
             }
-            await scheduleController.CancelFlight(Id);
-            await RefreshGridView();
+            await Program.Instance.ScheduleController.CancelFlight(Id);
+            await RefreshData();
             LoadGridView();
         }
 
@@ -105,7 +103,7 @@ namespace Airlines.Program
 
         private async void reloadBtn_Click(object sender, EventArgs e)
         {
-            await RefreshGridView();
+            await RefreshData();
             LoadGridView();
         }
 
@@ -126,7 +124,7 @@ namespace Airlines.Program
             form.FormClosed += Form_FormClosed;
             form.Sid = Id;
             form.ShowDialog();
-            await RefreshGridView();
+            await RefreshData();
             LoadGridView();
         }
 

@@ -14,17 +14,10 @@ namespace Airlines.Program
 {
     public partial class ImportFile : Form
     {
-        ScheduleController scheduleController;
 
         public ImportFile()
         {
             InitializeComponent();
-        }
-
-
-        private void ImportFile_Load(object sender, EventArgs e)
-        {
-            scheduleController = new ScheduleController();
         }
 
         private async void importBtn_Click(object sender, EventArgs e)
@@ -33,10 +26,11 @@ namespace Airlines.Program
             CsvReader csvConverter = new CsvReader();
 
             scheduleDtos = csvConverter.ReadCSV(filepathTxb.Text);
-            List<int> result = await scheduleController.ImportCsv(scheduleDtos);
+            List<int> result = await Program.Instance.ScheduleController.ImportCsv(scheduleDtos);
 
-            successLbl.Text = $"Success: {result[0]}";
-            failLbl.Text = $"Fail: {result[1]}";
+            //successLbl.Text = $"Success: {result[0]}";
+            //duplicateLbl.Text = $"Duplicate: {result[1]}";
+            //failLbl.Text = $"Fail: {result[2]}";
         }
 
         private void chooseBtn_Click(object sender, EventArgs e)

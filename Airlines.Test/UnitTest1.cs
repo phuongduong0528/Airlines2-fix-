@@ -17,7 +17,7 @@ namespace Airlines.Test
         {
             ScheduleController controller = new ScheduleController();
 
-            int id = await controller.FindFlight(date, flightnumber);
+            int id = await controller.FindFlightID(date, flightnumber);
 
             Assert.AreEqual(id, expected);
         }
