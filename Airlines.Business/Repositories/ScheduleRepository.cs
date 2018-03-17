@@ -49,13 +49,13 @@ namespace Airlines.Business.Repositories
             return false;
         }
 
-        public bool EditSchedule(Schedule schedule)
+        public bool EditSchedule(Schedule sch)
         {
             try
             {
-                if (schedule == null)
+                if (sch == null)
                     return false;
-                session.Entry(schedule).State = System.Data.Entity.EntityState.Modified;
+                session.Entry(sch).State = System.Data.Entity.EntityState.Modified;
                 session.SaveChanges();
                 return true;
             }

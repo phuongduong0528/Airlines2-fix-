@@ -44,7 +44,9 @@ namespace Airlines.Program
             bool desc = false;
             if (descChkbx.Checked)
                 desc = true;
+
             schedules = new List<ScheduleDto>();
+
             schedules = await scheduleController.LoadListSchedule(
                 fromCbx.SelectedItem.ToString(),
                 toCbx.SelectedItem.ToString(),
@@ -107,7 +109,7 @@ namespace Airlines.Program
             LoadGridView();
         }
 
-        private void editBtn_Click(object sender, EventArgs e)
+        private async void editBtn_Click(object sender, EventArgs e)
         {
             int Id;
             try
@@ -124,6 +126,8 @@ namespace Airlines.Program
             form.FormClosed += Form_FormClosed;
             form.Sid = Id;
             form.ShowDialog();
+            await RefreshGridView();
+            LoadGridView();
         }
 
         private void Form_FormClosed(object sender, FormClosedEventArgs e)

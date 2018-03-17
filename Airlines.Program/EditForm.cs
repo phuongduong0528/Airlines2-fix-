@@ -59,8 +59,14 @@ namespace Airlines.Program
                 MessageBox.Show("Wrong price format");
                 return;
             }
-            scheduleController.EditSchedule(schedule);
-            this.Close();
+            int y = await scheduleController.FindFlight(schedule.Date, schedule.FlightNumber); //KIEM TRA BAY CUNG NGAY
+            if (y == 0 || y == schedule.Id)
+            {
+                scheduleController.EditSchedule(schedule);
+                this.Close();
+            }
+            else
+                MessageBox.Show("Can't have same flightnumber on same day");
         }
     }
 }

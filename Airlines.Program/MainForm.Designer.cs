@@ -30,6 +30,7 @@
         {
             this.scheduleDgv = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.descChkbx = new System.Windows.Forms.CheckBox();
             this.flightTxb = new System.Windows.Forms.TextBox();
             this.applyBtn = new System.Windows.Forms.Button();
             this.outboundTxb = new System.Windows.Forms.TextBox();
@@ -45,13 +46,15 @@
             this.editBtn = new System.Windows.Forms.Button();
             this.reloadBtn = new System.Windows.Forms.Button();
             this.importBtn = new System.Windows.Forms.Button();
-            this.descChkbx = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.scheduleDgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // scheduleDgv
             // 
+            this.scheduleDgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.scheduleDgv.BackgroundColor = System.Drawing.SystemColors.Control;
             this.scheduleDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.scheduleDgv.Location = new System.Drawing.Point(12, 124);
@@ -61,6 +64,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox1.Controls.Add(this.descChkbx);
             this.groupBox1.Controls.Add(this.flightTxb);
             this.groupBox1.Controls.Add(this.applyBtn);
@@ -79,6 +83,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filter";
+            // 
+            // descChkbx
+            // 
+            this.descChkbx.AutoSize = true;
+            this.descChkbx.Location = new System.Drawing.Point(556, 71);
+            this.descChkbx.Name = "descChkbx";
+            this.descChkbx.Size = new System.Drawing.Size(110, 24);
+            this.descChkbx.TabIndex = 3;
+            this.descChkbx.Text = "Descending";
+            this.descChkbx.UseVisualStyleBackColor = true;
             // 
             // flightTxb
             // 
@@ -180,6 +194,7 @@
             // 
             // cancelBtn
             // 
+            this.cancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cancelBtn.Location = new System.Drawing.Point(12, 444);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(127, 34);
@@ -190,6 +205,7 @@
             // 
             // editBtn
             // 
+            this.editBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.editBtn.Location = new System.Drawing.Point(145, 444);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(127, 34);
@@ -200,6 +216,7 @@
             // 
             // reloadBtn
             // 
+            this.reloadBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.reloadBtn.Location = new System.Drawing.Point(590, 444);
             this.reloadBtn.Name = "reloadBtn";
             this.reloadBtn.Size = new System.Drawing.Size(96, 34);
@@ -210,6 +227,7 @@
             // 
             // importBtn
             // 
+            this.importBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.importBtn.Location = new System.Drawing.Point(692, 444);
             this.importBtn.Name = "importBtn";
             this.importBtn.Size = new System.Drawing.Size(96, 34);
@@ -217,16 +235,6 @@
             this.importBtn.Text = "Import";
             this.importBtn.UseVisualStyleBackColor = true;
             this.importBtn.Click += new System.EventHandler(this.importBtn_Click);
-            // 
-            // descChkbx
-            // 
-            this.descChkbx.AutoSize = true;
-            this.descChkbx.Location = new System.Drawing.Point(556, 71);
-            this.descChkbx.Name = "descChkbx";
-            this.descChkbx.Size = new System.Drawing.Size(110, 24);
-            this.descChkbx.TabIndex = 3;
-            this.descChkbx.Text = "Descending";
-            this.descChkbx.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
