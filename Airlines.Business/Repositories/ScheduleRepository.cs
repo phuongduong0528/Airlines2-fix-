@@ -9,11 +9,11 @@ namespace Airlines.Business.Repositories
 {
     public class ScheduleRepository : IScheduleRepository
     {
-        private Session2Entities session;
+        private Session2Entities _session2DbContext;
 
         public ScheduleRepository()
         {
-            session = new Session2Entities();
+            _session2DbContext = new Session2Entities();
         }
 
         public bool AddSchedule(Schedule schedule)
@@ -22,9 +22,9 @@ namespace Airlines.Business.Repositories
             {
                 if (schedule == null)
                     return false;
-                schedule.ID = session.Schedules.Max(s => s.ID) + 1;
-                session.Schedules.Add(schedule);
-                session.SaveChanges();
+                schedule.ID = _session2DbContext.Schedules.Max(s => s.ID) + 1;
+                _session2DbContext.Schedules.Add(schedule);
+                _session2DbContext.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -35,15 +35,15 @@ namespace Airlines.Business.Repositories
 
         public bool CancelFlight(int id)
         {
-            Schedule sch = session.Schedules.SingleOrDefault(s => s.ID == id);
+            Schedule sch = _session2DbContext.Schedules.SingleOrDefault(s => s.ID == id);
             if (sch != null)
             {
                 if (sch.Confirmed)
                     sch.Confirmed = false;
                 else
                     sch.Confirmed = true;
-                session.Entry(sch).State = System.Data.Entity.EntityState.Modified;
-                session.SaveChanges();
+                _session2DbContext.Entry(sch).State = System.Data.Entity.EntityState.Modified;
+                _session2DbContext.SaveChanges();
                 return true;
             }
             return false;
@@ -55,8 +55,8 @@ namespace Airlines.Business.Repositories
             {
                 if (sch == null)
                     return false;
-                session.Entry(sch).State = System.Data.Entity.EntityState.Modified;
-                session.SaveChanges();
+                _session2DbContext.Entry(sch).State = System.Data.Entity.EntityState.Modified;
+                _session2DbContext.SaveChanges();
                 return true;
             }
             catch(Exception)
@@ -67,7 +67,7 @@ namespace Airlines.Business.Repositories
 
         public Schedule GetSchedule(int id)
         {
-            return session.Schedules.SingleOrDefault(sch => sch.ID == id);
+            return _session2DbContext.Schedules.SingleOrDefault(sch => sch.ID == id);
         }
     }
 }

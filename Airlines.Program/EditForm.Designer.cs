@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.aircraftLbl = new System.Windows.Forms.Label();
+            this.toLbl = new System.Windows.Forms.Label();
+            this.fromLbl = new System.Windows.Forms.Label();
             this.updateBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.dateDtp = new System.Windows.Forms.DateTimePicker();
             this.timeTxb = new System.Windows.Forms.TextBox();
             this.economyTxb = new System.Windows.Forms.TextBox();
-            this.fromLbl = new System.Windows.Forms.Label();
-            this.toLbl = new System.Windows.Forms.Label();
-            this.aircraftLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,6 +56,33 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // aircraftLbl
+            // 
+            this.aircraftLbl.AutoSize = true;
+            this.aircraftLbl.Location = new System.Drawing.Point(420, 72);
+            this.aircraftLbl.Name = "aircraftLbl";
+            this.aircraftLbl.Size = new System.Drawing.Size(64, 20);
+            this.aircraftLbl.TabIndex = 0;
+            this.aircraftLbl.Text = "Aircraft";
+            // 
+            // toLbl
+            // 
+            this.toLbl.AutoSize = true;
+            this.toLbl.Location = new System.Drawing.Point(214, 72);
+            this.toLbl.Name = "toLbl";
+            this.toLbl.Size = new System.Drawing.Size(26, 20);
+            this.toLbl.TabIndex = 0;
+            this.toLbl.Text = "To";
+            // 
+            // fromLbl
+            // 
+            this.fromLbl.AutoSize = true;
+            this.fromLbl.Location = new System.Drawing.Point(17, 72);
+            this.fromLbl.Name = "fromLbl";
+            this.fromLbl.Size = new System.Drawing.Size(44, 20);
+            this.fromLbl.TabIndex = 0;
+            this.fromLbl.Text = "From";
             // 
             // updateBtn
             // 
@@ -102,33 +129,6 @@
             this.economyTxb.Name = "economyTxb";
             this.economyTxb.Size = new System.Drawing.Size(124, 26);
             this.economyTxb.TabIndex = 3;
-            // 
-            // fromLbl
-            // 
-            this.fromLbl.AutoSize = true;
-            this.fromLbl.Location = new System.Drawing.Point(17, 72);
-            this.fromLbl.Name = "fromLbl";
-            this.fromLbl.Size = new System.Drawing.Size(44, 20);
-            this.fromLbl.TabIndex = 0;
-            this.fromLbl.Text = "From";
-            // 
-            // toLbl
-            // 
-            this.toLbl.AutoSize = true;
-            this.toLbl.Location = new System.Drawing.Point(214, 72);
-            this.toLbl.Name = "toLbl";
-            this.toLbl.Size = new System.Drawing.Size(26, 20);
-            this.toLbl.TabIndex = 0;
-            this.toLbl.Text = "To";
-            // 
-            // aircraftLbl
-            // 
-            this.aircraftLbl.AutoSize = true;
-            this.aircraftLbl.Location = new System.Drawing.Point(420, 72);
-            this.aircraftLbl.Name = "aircraftLbl";
-            this.aircraftLbl.Size = new System.Drawing.Size(64, 20);
-            this.aircraftLbl.TabIndex = 0;
-            this.aircraftLbl.Text = "Aircraft";
             // 
             // label1
             // 

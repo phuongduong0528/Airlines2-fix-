@@ -15,18 +15,18 @@ namespace Airlines.Program.Controller
         /// <summary>
         /// Read CSV, Create ScheduleDto and convert file to xlsx
         /// </summary>
-        public List<ScheduleDto> ReadCSV(string input)
+        public List<ScheduleDto> ReadCsv(string input)
         {
-            List<ScheduleDto> result = new List<ScheduleDto>();
-            ScheduleDto s;
-            DateTime timeval = new DateTime();
+            List<ScheduleDto> scheduleDtos = new List<ScheduleDto>();
+            ScheduleDto scheduleDto;
+            DateTime datetimeValueTemp = new DateTime();
 
             FileInfo fileInfo = new FileInfo(input);
             ExcelTextFormat format = new ExcelTextFormat();
             format.Delimiter = ',';
             format.Encoding = new UTF8Encoding();
             format.Culture = new CultureInfo(Thread.CurrentThread.CurrentCulture.ToString());
-            format.Culture.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
+            format.Culture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             using (ExcelPackage package = new ExcelPackage())
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Worksheet 1");
@@ -46,39 +46,54 @@ namespace Airlines.Program.Controller
                     if (!ValidateRow(worksheet, i))
                         continue;
 
-                    s = new ScheduleDto();
+                    scheduleDto = new ScheduleDto();
 
                     if (worksheet.Cells[i, 1].Value.ToString().Equals("ADD"))
-                        s.Id = 0;
+                        scheduleDto.Id = 0;
                     else
-                        s.Id = -1;
+                        scheduleDto.Id = -1;
 
-                    timeval = DateTime.Parse(worksheet.Cells[i, 3].Value.ToString());
-
-                    s.Date = worksheet.Cells[i, 2].Value.ToString();
-                    s.Time = timeval.ToShortTimeString();
-                    s.FlightNumber = worksheet.Cells[i, 4].Text;
-                    s.From = worksheet.Cells[i, 5].Text;
-                    s.To = worksheet.Cells[i, 6].Text;
+                    //timeval = DateTime.Parse(worksheet.Cells[i, 3].Value.ToString());
+                    if(DateTime.TryParse(worksheet.Cells[i, 3].Value.ToString(),out datetimeValueTemp))
+                    {
+                        scheduleDto.Time = datetimeValueTemp.ToShortTimeString();
+                    }
+                    else
+                    {
+                        scheduleDto.Time = "";
+                    }
+                    if(DateTime.TryParse(worksheet.Cells[i, 2].Value.ToString(), out datetimeValueTemp))
+                    {
+                        scheduleDto.Date = datetimeValueTemp.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        scheduleDto.Date = "";
+                    }
+                    string test = worksheet.Cells[i, 2].Text;
+                    scheduleDto.FlightNumber = worksheet.Cells[i, 4].Text;
+                    scheduleDto.From = worksheet.Cells[i, 5].Text;
+                    scheduleDto.To = worksheet.Cells[i, 6].Text;
+                    scheduleDto.AircraftName = "";
                     try
                     {
-                        s.AircraftID = Convert.ToInt32(worksheet.Cells[i, 7].Text);
-                        s.EconomyPrice = Convert.ToDecimal(worksheet.Cells[i, 8].Text);
+                        scheduleDto.AircraftID = Convert.ToInt32(worksheet.Cells[i, 7].Text);
+                        scheduleDto.EconomyPrice = Convert.ToDecimal(worksheet.Cells[i, 8].Text);
                     }
                     catch (Exception)
                     {
                         continue;
                     }
                     if (worksheet.Cells[i, 9].Value.ToString().Equals("OK"))
-                        s.Confirmed = true;
+                        scheduleDto.Confirmed = true;
                     else
-                        s.Confirmed = false;
-                    result.Add(s);
+                        scheduleDto.Confirmed = false;
+                    scheduleDtos.Add(scheduleDto);
                 }
 
                 package.SaveAs(new FileInfo(Path.GetDirectoryName(input)+"/Output.xlsx"));
             }
-            return result; //RETURN LIST
+            return scheduleDtos; //RETURN LIST
         }
 
 

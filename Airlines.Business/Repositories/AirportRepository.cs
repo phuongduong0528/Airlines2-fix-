@@ -9,17 +9,17 @@ namespace Airlines.Business.Repositories
 {
     public class AirportRepository
     {
-        Session2Entities session;
+        private Session2Entities _session2DbContext;
 
         public AirportRepository()
         {
-            session = new Session2Entities();
+            _session2DbContext = new Session2Entities();
         }
 
         public List<string> GetAirportList()
         {
             List<string> result = new List<string>();
-            foreach(Airport a in session.Airports)
+            foreach(Airport a in _session2DbContext.Airports)
             {
                 result.Add(a.IATACode);
             }

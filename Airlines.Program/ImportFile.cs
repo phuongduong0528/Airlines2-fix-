@@ -25,12 +25,12 @@ namespace Airlines.Program
             List<ScheduleDto> scheduleDtos = new List<ScheduleDto>();
             CsvReader csvConverter = new CsvReader();
 
-            scheduleDtos = csvConverter.ReadCSV(filepathTxb.Text);
+            scheduleDtos = csvConverter.ReadCsv(filepathTxb.Text);
             List<int> result = await Program.Instance.ScheduleController.ImportCsv(scheduleDtos);
 
-            //successLbl.Text = $"Success: {result[0]}";
-            //duplicateLbl.Text = $"Duplicate: {result[1]}";
-            //failLbl.Text = $"Fail: {result[2]}";
+            successLbl.Text = $"Success: {result[0]}";
+            duplicateLbl.Text = $"Duplicate: {result[1]}";
+            failLbl.Text = $"Fail: {result[2]}";
         }
 
         private void chooseBtn_Click(object sender, EventArgs e)

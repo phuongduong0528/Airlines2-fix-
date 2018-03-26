@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,11 +41,13 @@ namespace Airlines.Program
                 MessageBox.Show("Textbox must not blank");
                 return;
             }
-            schedule.Date = dateDtp.Value.Date.ToShortDateString();
+            schedule.Date = dateDtp.Value.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture);
 
             TimeSpan temp1;
-            if (TimeSpan.TryParse(timeTxb.Text, out temp1))
+            if (TimeSpan.TryParseExact(timeTxb.Text, @"HH\:mm", CultureInfo.InvariantCulture, out temp1))
+            {
                 schedule.Time = temp1.ToString();
+            }
             else
             {
                 MessageBox.Show("Wrong time format");
@@ -53,7 +56,9 @@ namespace Airlines.Program
 
             decimal temp2;
             if (Decimal.TryParse(economyTxb.Text, out temp2))
+            {
                 schedule.EconomyPrice = temp2;
+            }
             else
             {
                 MessageBox.Show("Wrong price format");
@@ -69,7 +74,9 @@ namespace Airlines.Program
                 this.Close();
             }
             else
+            {
                 MessageBox.Show("Can't have same flightnumber on same day");
+            }
         }
     }
 }

@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Controller\CsvReader.cs" />
     <Compile Include="Controller\ScheduleController.cs" />
+    <Compile Include="Controller\ScheduleDtoSerialization.cs" />
     <Compile Include="Controller\ScheduleRequest.cs" />
     <Compile Include="EditForm.cs">
       <SubType>Form</SubType>

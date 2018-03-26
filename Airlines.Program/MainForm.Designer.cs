@@ -46,6 +46,7 @@
             this.editBtn = new System.Windows.Forms.Button();
             this.reloadBtn = new System.Windows.Forms.Button();
             this.importBtn = new System.Windows.Forms.Button();
+            this.statusLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.scheduleDgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +104,7 @@
             // 
             // applyBtn
             // 
+            this.applyBtn.Enabled = false;
             this.applyBtn.Location = new System.Drawing.Point(666, 64);
             this.applyBtn.Name = "applyBtn";
             this.applyBtn.Size = new System.Drawing.Size(104, 34);
@@ -133,6 +135,7 @@
             // 
             // toCbx
             // 
+            this.toCbx.Enabled = false;
             this.toCbx.FormattingEnabled = true;
             this.toCbx.Location = new System.Drawing.Point(331, 23);
             this.toCbx.Name = "toCbx";
@@ -141,6 +144,7 @@
             // 
             // fromCbx
             // 
+            this.fromCbx.Enabled = false;
             this.fromCbx.FormattingEnabled = true;
             this.fromCbx.Location = new System.Drawing.Point(93, 23);
             this.fromCbx.Name = "fromCbx";
@@ -236,11 +240,23 @@
             this.importBtn.UseVisualStyleBackColor = true;
             this.importBtn.Click += new System.EventHandler(this.importBtn_Click);
             // 
+            // statusLbl
+            // 
+            this.statusLbl.AutoSize = true;
+            this.statusLbl.ForeColor = System.Drawing.Color.Red;
+            this.statusLbl.Location = new System.Drawing.Point(339, 451);
+            this.statusLbl.Name = "statusLbl";
+            this.statusLbl.Size = new System.Drawing.Size(79, 20);
+            this.statusLbl.TabIndex = 3;
+            this.statusLbl.Text = "Loading...";
+            this.statusLbl.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 490);
+            this.Controls.Add(this.statusLbl);
             this.Controls.Add(this.importBtn);
             this.Controls.Add(this.reloadBtn);
             this.Controls.Add(this.editBtn);
@@ -255,6 +271,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -278,6 +295,7 @@
         private System.Windows.Forms.Button importBtn;
         private System.Windows.Forms.Button applyBtn;
         private System.Windows.Forms.CheckBox descChkbx;
+        private System.Windows.Forms.Label statusLbl;
     }
 }
 

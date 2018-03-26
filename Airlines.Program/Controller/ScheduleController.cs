@@ -66,7 +66,8 @@ namespace Airlines.Program.Controller
         {
             ScheduleRequest<bool> request = new ScheduleRequest<bool>();
             request.Url = baseUrl + "/Schedule";
-            bool result = await request.SubmitDataJson(Method.PUT, JsonConvert.SerializeObject(s));
+            //bool result = await request.SubmitDataJson(Method.PUT, JsonConvert.SerializeObject(s));
+            bool result = await request.SubmitData(Method.PUT, ScheduleDtoSerialization.Serialize(s));
             return result;
         }
 
@@ -90,8 +91,14 @@ namespace Airlines.Program.Controller
         public async Task<List<int>> ImportCsv(List<ScheduleDto> _scheduleDtos)
         {
             ScheduleRequest<List<int>> request = new ScheduleRequest<List<int>>();
+            List<object> list = new List<object>();
             request.Url = baseUrl + "/Schedule/Import";
-            List<int> re = await request.SubmitDataJson(Method.POST, JsonConvert.SerializeObject(_scheduleDtos));            
+            foreach(ScheduleDto sdto in _scheduleDtos)
+            {
+                list.Add(ScheduleDtoSerialization.Serialize(sdto));
+            }
+            //List<int> re = await request.SubmitDataJson(Method.POST, JsonConvert.SerializeObject(_scheduleDtos));
+            List<int> re = await request.SubmitData(Method.POST, list);
             return re;
         }
     }

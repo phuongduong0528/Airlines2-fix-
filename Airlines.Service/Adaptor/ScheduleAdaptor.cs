@@ -3,6 +3,7 @@ using Airlines.Business.Models;
 using Airlines.Service.Dto;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,8 @@ namespace Airlines.Service.Adaptor
         {
             ScheduleDto sDto = new ScheduleDto();
             sDto.Id = schedule.ID;
-            sDto.Date = schedule.Date.ToShortDateString();
-            sDto.Time = schedule.Time.ToString();
+            sDto.Date = schedule.Date.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture);
+            sDto.Time = schedule.Time.ToString(@"hh\:mm", CultureInfo.InvariantCulture);
             sDto.From = schedule.Route.Airport.IATACode;
             sDto.To = schedule.Route.Airport1.IATACode;
             sDto.FlightNumber = schedule.FlightNumber;
@@ -47,9 +48,9 @@ namespace Airlines.Service.Adaptor
             {
                 Session2Entities session = new Session2Entities();
                 Schedule s = new Schedule();
-                s.ID = scheduleDto.Id;  
-                s.Date = DateTime.Parse(scheduleDto.Date);
-                s.Time = TimeSpan.Parse(scheduleDto.Time);
+                s.ID = scheduleDto.Id;
+                s.Date = DateTime.ParseExact(scheduleDto.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                s.Time = TimeSpan.ParseExact(scheduleDto.Time,@"hh\:mm", CultureInfo.InvariantCulture);
                 s.AircraftID = scheduleDto.AircraftID;
                 s.RouteID = session.Routes.Single(r =>
                     r.Airport.IATACode.Equals(scheduleDto.From) &&

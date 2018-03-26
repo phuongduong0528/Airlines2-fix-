@@ -10,30 +10,30 @@ namespace Airlines.Business.Manager
 {
     public class ScheduleManager : IScheduleManager
     {
-        ScheduleRepository scheduleRepository;
-        AirportRepository airportRepository;
-        Session2Entities session;
+        private ScheduleRepository _scheduleRepository;
+        private AirportRepository _airportRepository;
+        private Session2Entities _session2DbContext;
 
         public ScheduleManager()
         {
-            scheduleRepository = new ScheduleRepository();
-            airportRepository = new AirportRepository();
-            session = new Session2Entities();
+            _scheduleRepository = new ScheduleRepository();
+            _airportRepository = new AirportRepository();
+            _session2DbContext = new Session2Entities();
         }
 
         public bool AddSchedule(Schedule schedule)
         {
-            return scheduleRepository.AddSchedule(schedule);
+            return _scheduleRepository.AddSchedule(schedule);
         }
 
         public bool CancelFlight(int id)
         {
-            return scheduleRepository.CancelFlight(id);
+            return _scheduleRepository.CancelFlight(id);
         }
 
         public bool EditSchedule(Schedule schedule)
         {
-            return scheduleRepository.EditSchedule(schedule);
+            return _scheduleRepository.EditSchedule(schedule);
         }
 
         public int FindFlight(string date, string flightnumber)
@@ -42,7 +42,7 @@ namespace Airlines.Business.Manager
             try
             {
                 d = DateTime.Parse(date);
-                Schedule s = session.Schedules.Single(sch => sch.Date.Equals(d) && sch.FlightNumber.Equals(flightnumber));
+                Schedule s = _session2DbContext.Schedules.Single(sch => sch.Date.Equals(d) && sch.FlightNumber.Equals(flightnumber));
                 return s.ID;
             }
             catch (Exception)
@@ -54,66 +54,66 @@ namespace Airlines.Business.Manager
 
         public List<string> GetAirportList()
         {
-            return airportRepository.GetAirportList();
+            return _airportRepository.GetAirportList();
         }
 
         public List<Schedule> GetListScheduleFilter(string from, string to, string date, 
             string flightnumber, string sortBy, bool descending)
         {
-            List<Schedule> result = new List<Schedule>();
+            List<Schedule> schedules = new List<Schedule>();
 
-            result = session.Schedules.Where(sch => 
+            schedules = _session2DbContext.Schedules.Where(sch => 
                 sch.Route.Airport.IATACode.Equals(from) && 
                 sch.Route.Airport1.IATACode.Equals(to)).ToList();
 
             DateTime d;
             if (DateTime.TryParse(date, out d))
-                result = result.Where(r => r.Date.Equals(d)).ToList();
+                schedules = schedules.Where(r => r.Date.Equals(d)).ToList();
 
             if (!String.IsNullOrWhiteSpace(flightnumber))
-                result = result.Where(r => r.FlightNumber.Equals(flightnumber)).ToList();
+                schedules = schedules.Where(r => r.FlightNumber.Equals(flightnumber)).ToList();
 
             switch (sortBy)
             {
                 case "Date":
                     if (!descending)
-                        result = result.OrderBy(r => r.Date).ToList();
+                        schedules = schedules.OrderBy(r => r.Date).ToList();
                     else
-                        result = result.OrderByDescending(r => r.Date).ToList();
+                        schedules = schedules.OrderByDescending(r => r.Date).ToList();
                     break;
                 case "Time":
                     if (!descending)
-                        result = result.OrderBy(r => r.Time).ToList();
+                        schedules = schedules.OrderBy(r => r.Time).ToList();
                     else
-                        result = result.OrderByDescending(r => r.Time).ToList();
+                        schedules = schedules.OrderByDescending(r => r.Time).ToList();
                     break;
                 case "Price":
                     if (!descending)
-                        result = result.OrderBy(r => r.EconomyPrice).ToList();
+                        schedules = schedules.OrderBy(r => r.EconomyPrice).ToList();
                     else
-                        result = result.OrderByDescending(r => r.EconomyPrice).ToList();
+                        schedules = schedules.OrderByDescending(r => r.EconomyPrice).ToList();
                     break;
                 default:
                     if (!descending)
-                        result = result.OrderBy(r => r.Date).ThenBy(r=>r.Time).ToList();
+                        schedules = schedules.OrderBy(r => r.Date).ThenBy(r=>r.Time).ToList();
                     else
-                        result = result.OrderByDescending(r => r.Date).ThenByDescending(r=>r.Time).ToList();
+                        schedules = schedules.OrderByDescending(r => r.Date).ThenByDescending(r=>r.Time).ToList();
                     break;
             }
-            return result;
+            return schedules;
         }
 
         public List<Schedule> GetListScheduleFilter(int start, int end)
         {
             if (start >= 0 && end >= 0)
-                return session.Schedules.Skip(start - 1).Take(end - start + 1).ToList();
+                return _session2DbContext.Schedules.Skip(start - 1).Take(end - start + 1).ToList();
             else
                 return null;
         }
 
         public Schedule GetSchedule(int id)
         {
-            return scheduleRepository.GetSchedule(id);
+            return _scheduleRepository.GetSchedule(id);
         }
 
         public List<int> CsvResult(List<Schedule> schedules)

@@ -57,8 +57,9 @@ namespace Airlines.Program
 
         private async void MainForm_Load(object sender, EventArgs e)
         {
+            BeginLoading();
             List<string> officelist = await Program.Instance.ScheduleController.GetOffice();
-            foreach(string str in officelist)
+            foreach (string str in officelist)
             {
                 fromCbx.Items.Add(str);
                 toCbx.Items.Add(str);
@@ -69,12 +70,31 @@ namespace Airlines.Program
 
             await RefreshData();
             LoadGridView();
+            FinishLoading();
+        }
+
+        private void FinishLoading()
+        {
+            statusLbl.Visible = false;
+            fromCbx.Enabled = true;
+            toCbx.Enabled = true;
+            applyBtn.Enabled = true;
+        }
+
+        private void BeginLoading()
+        {
+            fromCbx.Enabled = false;
+            toCbx.Enabled = false;
+            applyBtn.Enabled = false;
+            statusLbl.Visible = true;
         }
 
         private async void applyBtn_Click(object sender, EventArgs e)
         {
+            BeginLoading();
             await RefreshData();
             LoadGridView();
+            FinishLoading();
         }
 
         private async void cancelBtn_Click(object sender, EventArgs e)
